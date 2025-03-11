@@ -1,10 +1,11 @@
 const express = require("express")
 const router = express.Router()
-const { getBeerById, updateBeer, deleteBeer } = require("../controller/beerController");
+const { getBeerById, updateBeer, deleteBeer } = require("../controller/beerController")
+const {validateBeer} = require("../middleware/formRequest/form")
 
 router.get("/beer/:id_beer", getBeerById)
 
-router.put("/beer/:id_beer", updateBeer)
+router.put("/beer/:id_beer", validateBeer, updateBeer)
 
 router.delete("/beer/:id_beer", deleteBeer)
 

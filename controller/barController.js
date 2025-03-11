@@ -58,15 +58,15 @@ const getBarOrders = async (req, res) => {
 // Create a bar
 const createBar = async (req, res) => {
     try {
-        const { name, adress, tel, email, description } = req.body;
+        const { name, address: address, tel, email, description } = req.body;
 
-        if (!name || !adress || !email) {
-            return res.status(400).json({ message: "Name, adress et email sont obligatoires." });
+        if (!name || !address || !email) {
+            return res.status(400).json({ message: "Name, address et email sont obligatoires." });
         }
 
         const newBar = await Bar.create({
             name,
-            adress,
+            address: address,
             tel,
             email,
             description
@@ -137,7 +137,7 @@ const addOrderToBar = async (req, res) => {
 // Update a bar
 const updateBar = async (req, res) => {
     const id = parseInt(req.params.id_bar)
-    const { name, adress, tel, email, description } = req.body  
+    const { name, address, tel, email, description } = req.body  
 
     try {
         const bar = await Bar.findByPk(id)
@@ -148,7 +148,7 @@ const updateBar = async (req, res) => {
         // only update fields filled in req.body
         await bar.update({
             name: name ?? bar.name,
-            adress: adress ?? bar.adress,
+            address: address ?? bar.address,
             tel: tel ?? bar.tel,
             email: email ?? bar.email,
             description: description ?? bar.description
