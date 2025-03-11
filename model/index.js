@@ -10,5 +10,8 @@ Beer.belongsTo(Bar)
 Bar.hasMany(Order)
 Order.belongsTo(Bar)
 
+Beer.belongsToMany(Order, { through : 'Beer_Order'})
+Order.belongsToMany(Beer, { through : 'Beer_Order'})
+
 // export ../index.js
 module.exports = { Bar, Beer, Order }

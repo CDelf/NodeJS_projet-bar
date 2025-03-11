@@ -1,4 +1,4 @@
-const { Order }  = require("../model/index")
+const { Beer, Order }  = require("../model/index")
 const db = require("../config/db")
 
 // Get an order by id
@@ -17,6 +17,22 @@ const getOrderById = async (req, res) => {
     }
 }
 
+// Add a beer to an order
+const addBeerToOrder = async (req,res) => {
+    const orderId = parseInt(req.params.id_order)
+    const beerId = parseInt(req.params.id_beer)
+    const [order, beer] = await Promise.all([
+        Order.findByPk(orderId),
+        Beer.findByPk(beerId)
+    ])
+
+    if(!order) return res.status(400).json({ message: "Order not found !" })
+    if(!beer) return res.status(400).json({ message: "Beer not found !" })
+
+    await order.addBeer(beer);
+    res.status(201).json({message:"Beer added to order"});
+}
+
 // Update order
 const updateOrder = async (req, res) => {
     const id = parseInt(req.params.id_order)
@@ -29,9 +45,9 @@ const updateOrder = async (req, res) => {
         }
 
           // check status
-        const validStatuses = ["en cours", "terminée"];
+        const validStatuses = ["en cours", "terminée"]
         if (status && !validStatuses.includes(status)) {
-            return res.status(400).json({ message: "Invalid status value!" });
+            return res.status(400).json({ message: "Invalid status value!" })
         }
 
         // only update fields filled in req.body
@@ -63,4 +79,21 @@ const deleteOrder = async (req, res) => {
     }
 }
 
-module.exports = { getOrderById, updateOrder, deleteOrder }
+// Delete a beer from an order
+const deleteBeerFromOrder = async (req, res) => {
+    const orderId = parseInt(req.params.id_order)
+    const beerId = parseInt(req.params.id_beer)
+    const [order, beer] = await Promise.all([
+        Order.findByPk(orderId),
+        Beer.findByPk(beerId)
+    ])
+
+    if(!order) return res.status(400).json({ message: "Order not found !" })
+    if(!beer) return res.status(400).json({ message: "Beer not found !" })
+
+    await order.removeBeer(beer);
+    res.status(201).json({message:"Beer removed from order"})
+}
+
+module.exports = { getOrderById, addBeerToOrder, updateOrder, 
+    deleteOrder, deleteBeerFromOrder }
