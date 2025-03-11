@@ -1,4 +1,4 @@
-const { Bar, Beer }  = require("../model/index")
+const { Bar, Beer, Order }  = require("../model/index")
 const db = require("../config/db")
 
 // Get all bars
@@ -41,6 +41,19 @@ const getBarBeers = async (req, res) => {
     }
 };
 
+// Get a bar's orders
+const getBarOrders = async (req, res) => {
+    try {
+        const barId = parseInt(req.params.id_bar)
+        const bar = await Bar.findByPk(barId, { include: [Order] });
+        if (!bar) {
+            return res.status(404).json({ message: "Bar not found!" });
+        }
+        res.json({ orders: bar.orders });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 
 // Create a bar
 const createBar = async (req, res) => {
@@ -93,6 +106,34 @@ const addBeerToBar = async (req, res) => {
     }
 }
 
+// Add an order to a bar
+const addOrderToBar = async (req, res) => {
+    try {
+        const barId = parseInt(req.params.id_bar)
+    
+        const bar = await Bar.findByPk(barId)
+        if (!bar) {
+            return res.status(404).json({ message: "Bar not found!" })
+        }
+    
+        // check order's req.body
+        const { name, price, date, status } = req.body
+        if (!name || !price || !date || !status) {
+            return res.status(400).json({ message: "Name, price, date and status are required!" })
+        }
+        if (price <= 0) {
+            return res.status(400).json({ message: "Price must be greater than 0" })
+        }
+    
+        // Création de la bière et association au bar
+        const order = await Order.create({ name, price, date, status, barId })
+    
+        res.status(201).json({ message: "Order added successfully!", order })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 // Update a bar
 const updateBar = async (req, res) => {
     const id = parseInt(req.params.id_bar)
@@ -121,11 +162,7 @@ const updateBar = async (req, res) => {
 
 // Delete a bar
 const deleteBar = async (req, res) => {
-    const id = parseInt(req.params.id_bar)  
-    if (isNaN(id)) {
-        return res.status(400).json({ message: "Invalid bar ID" })
-    }
-
+    const id = parseInt(req.params.id_bar)
     try {
         const deleted = await Bar.destroy({ where: { id } })
         if (!deleted) {
@@ -138,5 +175,5 @@ const deleteBar = async (req, res) => {
 };
 
 
-module.exports = { getAllBars , getBarById, getBarBeers, createBar, 
-    addBeerToBar, updateBar, deleteBar }
+module.exports = { getAllBars , getBarById, getBarBeers, getBarOrders, createBar, 
+    addBeerToBar, addOrderToBar, updateBar, deleteBar }
