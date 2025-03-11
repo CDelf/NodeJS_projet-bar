@@ -1,4 +1,4 @@
-const { Bar }  = require("../model/index")
+const { Bar, Beer }  = require("../model/index")
 const db = require("../config/db")
 
 // Get all bars
@@ -14,7 +14,7 @@ const getAllBars = async (req, res) => {
 // Get a specific bar by ID
 const getBarById = async (req, res) => {
     try {
-        const barId = parseInt(req.params.id_bar, 10)
+        const barId = parseInt(req.params.id_bar)
         const bar = await Bar.findByPk(barId)
 
         if (!bar) {
@@ -26,6 +26,21 @@ const getBarById = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+// Get bar's beers
+const getBarBeers = async (req, res) => {
+    try {
+        const barId = parseInt(req.params.id_bar)
+        const bar = await Bar.findByPk(barId, { include: [Beer] });
+        if (!bar) {
+            return res.status(404).json({ message: "Bar not found!" });
+        }
+        res.json({ beers: bar.beers });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 
 // Create a bar
 const createBar = async (req, res) => {
@@ -49,6 +64,34 @@ const createBar = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 };
+
+// Add a beer to a bar
+const addBeerToBar = async (req, res) => {
+    try {
+        const barId = parseInt(req.params.id_bar)
+    
+        const bar = await Bar.findByPk(barId)
+        if (!bar) {
+            return res.status(404).json({ message: "Bar not found!" })
+        }
+    
+        // check beer's req.body
+        const { name, description, degree, price } = req.body
+        if (!name || !degree || !price) {
+            return res.status(400).json({ message: "Name, degree, and price are required!" })
+        }
+        if (price <= 0) {
+            return res.status(400).json({ message: "Price must be greater than 0" })
+        }
+    
+        // Création de la bière et association au bar
+        const beer = await Beer.create({ name, description, degree, price, barId })
+    
+        res.status(201).json({ message: "Beer added successfully!", beer })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
 
 // Update a bar
 const updateBar = async (req, res) => {
@@ -95,4 +138,5 @@ const deleteBar = async (req, res) => {
 };
 
 
-module.exports = { getAllBars , getBarById, createBar, updateBar, deleteBar }
+module.exports = { getAllBars , getBarById, getBarBeers, createBar, 
+    addBeerToBar, updateBar, deleteBar }
