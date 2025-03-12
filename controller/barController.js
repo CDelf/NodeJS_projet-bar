@@ -57,8 +57,9 @@ const getBarOrders = async (req, res) => {
 
 // Create a bar
 const createBar = async (req, res) => {
+    console.log("creation fonction called!")
     try {
-        const { name, address: address, tel, email, description } = req.body;
+        const { name, address, tel, email, description } = req.body
 
         if (!name || !address || !email) {
             return res.status(400).json({ message: "Name, address et email sont obligatoires." });
@@ -66,17 +67,19 @@ const createBar = async (req, res) => {
 
         const newBar = await Bar.create({
             name,
-            address: address,
+            address,
             tel,
             email,
             description
         })
 
         res.status(201).json(newBar)
+        console.log("Request Body:", req.body);
+
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
-};
+}
 
 // Add a beer to a bar
 const addBeerToBar = async (req, res) => {
@@ -160,20 +163,21 @@ const updateBar = async (req, res) => {
     }
 }
 
-// Delete a bar
+// Delete a bar and its related orders and beers
 const deleteBar = async (req, res) => {
-    const id = parseInt(req.params.id_bar)
+    const id = parseInt(req.params.id_bar);
     try {
-        const deleted = await Bar.destroy({ where: { id } })
-        if (!deleted) {
-            return res.status(404).json({ message: "Bar not found!" })
+        const bar = await Bar.findByPk(id, { include: [Order, Beer] });
+        if (!bar) {
+            return res.status(404).json({ message: "Bar not found!" });
         }
-        res.json({ message: "Bar deleted successfully!" })
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-};
 
+        await bar.destroy();
+        res.json({ message: "Bar and its related orders and beers deleted successfully!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
 module.exports = { getAllBars , getBarById, getBarBeers, getBarOrders, createBar, 
     addBeerToBar, addOrderToBar, updateBar, deleteBar }

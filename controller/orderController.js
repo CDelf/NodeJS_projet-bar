@@ -69,12 +69,15 @@ const deleteOrder = async (req, res) => {
     const id = parseInt(req.params.id_order)  
 
     try {
-        const deleted = await Order.destroy({ where: { id } })
-        if (!deleted) {
+        const order = await Order.findByPk(id);
+        if (!order) {
             return res.status(404).json({ message: "Order not found!" })
         }
-        res.json({ message: "Order deleted successfully!" })
-    } catch (error) {
+
+        await order.destroy()
+        res.json({ message: "Order and its beer associations deleted successfully!" })
+    }
+    catch (error) {
         res.status(500).json({ error: error.message })
     }
 }

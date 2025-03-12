@@ -41,21 +41,22 @@ const updateBeer = async (req, res) => {
     }
 }
 
-// Delete a beer
+// Delete a beer and its related orders
 const deleteBeer = async (req, res) => {
     const id = parseInt(req.params.id_beer)  
 
     try {
-        const deleted = await Beer.destroy({ where: { id } })
-        if (!deleted) {
+        const beer = await Beer.findByPk(id)
+        if (!beer) {
             return res.status(404).json({ message: "Beer not found!" })
         }
-        res.json({ message: "Beer deleted successfully!" })
-    } catch (error) {
+
+        await beer.destroy()
+        res.json({ message: "Beer and its order associations deleted successfully!" })
+    }
+    catch (error) {
         res.status(500).json({ error: error.message })
     }
 }
-
-
 
 module.exports = { getBeerById, updateBeer, deleteBeer }
