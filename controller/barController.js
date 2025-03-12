@@ -31,27 +31,26 @@ const getBarById = async (req, res) => {
 const getBarBeers = async (req, res) => {
     try {
         const barId = parseInt(req.params.id_bar)
-        const bar = await Bar.findByPk(barId, { include: [Beer] });
+        const bar = await Bar.findByPk(barId, { include: [Beer] })
         if (!bar) {
-            return res.status(404).json({ message: "Bar not found!" });
+            return res.status(404).json({ message: "Bar not found!" })
         }
-        res.json({ beers: bar.beers });
+        res.json({ beers: bar.beers })
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message })
     }
-};
-
+}
 // Get a bar's orders
 const getBarOrders = async (req, res) => {
     try {
         const barId = parseInt(req.params.id_bar)
-        const bar = await Bar.findByPk(barId, { include: [Order] });
+        const bar = await Bar.findByPk(barId, { include: [Order] })
         if (!bar) {
-            return res.status(404).json({ message: "Bar not found!" });
+            return res.status(404).json({ message: "Bar not found!" })
         }
-        res.json({ orders: bar.orders });
+        res.json({ orders: bar.orders })
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message })
     }
 }
 
@@ -62,7 +61,7 @@ const createBar = async (req, res) => {
         const { name, address, tel, email, description } = req.body
 
         if (!name || !address || !email) {
-            return res.status(400).json({ message: "Name, address et email sont obligatoires." });
+            return res.status(400).json({ message: "Name, address et email sont obligatoires." })
         }
 
         const newBar = await Bar.create({
@@ -74,7 +73,7 @@ const createBar = async (req, res) => {
         })
 
         res.status(201).json(newBar)
-        console.log("Request Body:", req.body);
+        console.log("Request Body:", req.body)
 
     } catch (error) {
         res.status(500).json({ error: error.message })
@@ -165,17 +164,17 @@ const updateBar = async (req, res) => {
 
 // Delete a bar and its related orders and beers
 const deleteBar = async (req, res) => {
-    const id = parseInt(req.params.id_bar);
+    const id = parseInt(req.params.id_bar)
     try {
-        const bar = await Bar.findByPk(id, { include: [Order, Beer] });
+        const bar = await Bar.findByPk(id, { include: [Order, Beer] })
         if (!bar) {
-            return res.status(404).json({ message: "Bar not found!" });
+            return res.status(404).json({ message: "Bar not found!" })
         }
 
-        await bar.destroy();
-        res.json({ message: "Bar and its related orders and beers deleted successfully!" });
+        await bar.destroy()
+        res.json({ message: "Bar and its related orders and beers deleted successfully!" })
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message })
     }
 }
 
