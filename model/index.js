@@ -4,10 +4,10 @@ const Beer = require("./Beer")
 const Order = require("./Order")
 
 // Connections
-Bar.hasMany(Beer)
+Bar.hasMany(Beer, { onDelete: "CASCADE" })
 Beer.belongsTo(Bar)
 
-Bar.hasMany(Order)
+Bar.hasMany(Order, { onDelete: "CASCADE" })
 Order.belongsTo(Bar)
 
 Beer.belongsToMany(Order, { through : 'Beer_Order'})
