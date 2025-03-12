@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { getBeerById, updateBeer, deleteBeer } = require("../controller/beerController")
-const {validateBeer} = require("../middleware/formRequest/form")
+const {validateBeer} = require("../middleware/form")
 
 router.get("/beer/:id_beer", getBeerById)
 

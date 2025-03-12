@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const { getOrderById, addBeerToOrder, updateOrder, 
     deleteOrder, deleteBeerFromOrder } = require("../controller/orderController")
-const {validateBar, validateBeer, validateOrder} = require("../middleware/formRequest/form")
+const {validateBar, validateBeer, validateOrder} = require("../middleware/form")
 
 router.get("/orders/:id_order", getOrderById)
 

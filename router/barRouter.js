@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const { getAllBars, getBarById, getBarBeers, getBarOrders, createBar, addBeerToBar,
     addOrderToBar, updateBar, deleteBar } = require("../controller/barController")
-const {validateBar, validateBeer, validateOrder} = require("../middleware/formRequest/form")
+const {validateBar, validateBeer, validateOrder} = require("../middleware/form")
 
 
 router.get("/bars", getAllBars )

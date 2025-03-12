@@ -25,7 +25,7 @@ const validateBar = [
         .trim(),
 
     (req, res, next) => {
-        const errors = validationresult(req)
+        const errors = validationResult(req)
         if (errors) return res.status(400).json({ errors });
 
         next()
@@ -53,7 +53,7 @@ const validateBeer = [
         .trim(),
 
     (req, res, next) => {
-        const errors = validationresult(req)
+        const errors = validationResult(req)
         if (errors) return res.status(400).json({ errors });
 
         next()
@@ -88,7 +88,7 @@ const validateOrder = [
         .trim(),
 
     (req, res, next) => {
-        const errors = validationresult(req)
+        const errors = validationResult(req)
         if (errors) return res.status(400).json({ errors });
 
         next()
