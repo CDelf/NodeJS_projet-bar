@@ -86,7 +86,7 @@
 
 .card h2 {
     color: var(--subtitles-color);
-    background-color: var(--cards-bckg-color);
+
     margin-bottom: 10px;
 }
 
@@ -184,4 +184,18 @@ button:active {
 
 .delete-icon:hover {
     color: #c0392b;
+}
+
+/* icone pour ajout bière/commande */
+.add-icon {
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.add-icon:hover {
+    color: orange;
 }
