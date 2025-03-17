@@ -4,6 +4,15 @@ const PDFDocument = require("pdfkit")
 const fs = require("fs")
 const path = require("path")
 
+// Get all orders
+const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.findAll()
+        res.json(orders)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
 // Get an order by id
 const getOrderById = async (req, res) => {
     try {
@@ -21,7 +30,7 @@ const getOrderById = async (req, res) => {
 }
 
 // Get order details and return as a PDF
-const getOrderDetailsPDF = async (req, res) => {
+const getOrderPdf = async (req, res) => {
     try {
         // Get order with associated beers
         const id = parseInt(req.params.id_commande)
@@ -63,6 +72,24 @@ const getOrderDetailsPDF = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+// Add a beer to an order
+const addBeerToOrder = async (req, res) => {
+    const orderId = parseInt(req.params.id_order)
+    const beerId = parseInt(req.params.id_beer)
+
+    const [order, beer] = await Promise.all([
+        Order.findByPk(orderId),
+        Beer.findByPk(beerId)
+    ])
+
+    if(!order) return res.status(400).json({ message: "Order not found !" })
+    if(!beer) return res.status(400).json({ message: "Beer not found !" })
+
+    await order.addBeer(beer)
+    res.status(201).json({message:"Beer added to order"})
+
+}   
 
 // Update order
 const updateOrder = async (req, res) => {
@@ -113,7 +140,7 @@ const deleteOrder = async (req, res) => {
     }
 }
 
-// Delete a beer from an order
+// Remove a beer from an order
 const deleteBeerFromOrder = async (req, res) => {
     const orderId = parseInt(req.params.id_order)
     const beerId = parseInt(req.params.id_beer)
@@ -130,6 +157,6 @@ const deleteBeerFromOrder = async (req, res) => {
 }
 
 module.exports = {  
-                    getOrderPdf, getOrderById, addBeerToOrder, updateOrder, 
+                    getAllOrders, getOrderPdf, getOrderById, addBeerToOrder, updateOrder, 
                     deleteOrder, deleteBeerFromOrder 
                 }

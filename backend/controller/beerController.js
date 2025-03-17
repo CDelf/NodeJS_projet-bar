@@ -1,6 +1,16 @@
 const { Beer }  = require("../model/index")
 const db = require("../config/db")
 
+// Get all beers
+const getAllBeers = async (req,res) => {
+    try {
+        const beers = await Beer.findAll()
+        res.json(beers)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 // Get beer by id
 const getBeerById = async (req, res) => {
         try {
@@ -59,4 +69,4 @@ const deleteBeer = async (req, res) => {
     }
 }
 
-module.exports = { getBeerById, updateBeer, deleteBeer }
+module.exports = { getAllBeers, getBeerById, updateBeer, deleteBeer }
