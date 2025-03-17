@@ -1,0 +1,35 @@
+.filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: var(--cards-bckg-color);
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px var(--shadow-color);
+    color: var(--text-color);
+}
+
+.filter-form input, 
+.filter-form select, 
+.filter-form button {
+    padding: 8px 15px;
+    background-color: transparent;
+    border: 1px solid var(--subtext-color);
+    color: var(--text-color);
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+.filter-form input::placeholder {
+    color: var(--subtext-color);
+}
+
+.filter-form button {
+    background-color: var(--subtitles-color);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.filter-form button:hover {
+    background-color: var(--titles-color);
+}

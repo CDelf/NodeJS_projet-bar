@@ -1,0 +1,50 @@
+@import '../_variables.css';
+
+.header {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start;
+    gap: 20px; 
+    padding: 20px;
+
+    h1 {
+        font-weight: bolder;
+        color: var(--titles-color);
+    }
+
+    h3 {
+        font-style: italic;
+        color: var(--titles-color);
+    }
+}
+
+.header img {
+    width: 130px;
+
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.app-name {
+    color: var(--titles-color);
+    font-size: 40px;
+    font-weight: bold;
+    position: relative;
+}
+
+.app-name::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%; /* Taille de la barre */
+    height: 3px; /* Épaisseur */
+    background-color: var(--subtitles-color); /* Couleur de la barre */
+    border-radius: 5px;
+}

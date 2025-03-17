@@ -1,0 +1,9 @@
+:root {
+    --page-bckg-color: rgb(39, 29, 28);
+    --cards-bckg-color: rgb(43, 23, 23);
+    --titles-color: #F3D15B; 
+    --subtitles-color: #C7411D;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --text-color: #e9e7e7;
+    --subtext-color: #e4c3a0;
+}
