@@ -14,6 +14,8 @@ export const addBeer = async (barId, beerData) => {
 };
 
 // Supprimer une bière
-export const deleteBeer = async (barId, beerId) => {
-    await axios.delete(`${API_URL}/bars/${barId}/beer/${beerId}`);
+export const deleteBeer = async (beerId) => {
+    await axios.delete(`${API_URL}/beer/${beerId}`);
 };
+
+

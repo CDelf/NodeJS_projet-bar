@@ -1,11 +1,16 @@
 import React from 'react';
 import Header from '../components/Header';
-import useFetchOrders from '../hooks/useFetchOrders';
 import Navigation from '../components/Navigation';
+import useFetchOrders from '../hooks/useFetchOrders';
+import OrderCard from '../components/OrderCard'; // 👈 Import du composant
 import '../styles/components/card.css';
 
 const Orders = () => {
     const { orders, loading, error } = useFetchOrders();
+
+    const handleOrderDeleted = (orderId) => {
+        console.log('Commande supprimée avec succès', orderId);
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Erreur: {error}</p>;
@@ -16,14 +21,11 @@ const Orders = () => {
             <Navigation />
             <div className="container">
                 {orders.map(order => (
-                    <div key={order.id} className="card">
-                        <h2>{order.name}</h2>
-                        <p className="date">Passée le {new Date(order.date).toLocaleDateString()}</p>
-                        <p className="details">
-                            <span className="price">{order.price}€</span>
-                            <span className={`status ${order.status}`}>{order.status}</span>
-                        </p>
-                    </div>
+                    <OrderCard 
+                        key={order.id}
+                        order={order}
+                        onOrderDeleted={handleOrderDeleted} 
+                    />
                 ))}
             </div>
         </div>

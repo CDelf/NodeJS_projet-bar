@@ -14,6 +14,6 @@ export const addOrder = async (barId, orderData) => {
 };
 
 // Supprimer une commande
-export const deleteOrder = async (barId, orderId) => {
-    await axios.delete(`${API_URL}/bars/${barId}/order/${orderId}`);
+export const deleteOrder = async (orderId) => {
+    await axios.delete(`${API_URL}/order/${orderId}`);
 };

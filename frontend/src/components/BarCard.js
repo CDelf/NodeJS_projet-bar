@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaTimes, FaPlus } from 'react-icons/fa';
 import DeleteModal from './DeleteModal';
+import { deleteBar } from '../api/barApi';
 import AddBeerModal from './AddBeerModal';
 import AddOrderModal from './AddOrderModal';
 import useFetchBeers from '../hooks/useFetchBeers';
@@ -29,6 +30,7 @@ const BarCard = ({ bar, onBarDeleted }) => {
         setShowAddOrderModal(false);
         toggleSection('orders'); // Pour recharger la liste après ajout
     };
+    console.log('Bar:', bar);
 
     return (
         <div className="card">
@@ -89,11 +91,12 @@ const BarCard = ({ bar, onBarDeleted }) => {
             </div>
 
             {showDeleteModal && (
-                <DeleteModal 
-                    barId={bar.id} 
-                    onClose={() => setShowDeleteModal(false)} 
-                    onBarDeleted={() => onBarDeleted(bar.id)} 
-                />
+            <DeleteModal 
+                itemId={bar.id}
+                deleteFunction={deleteBar} 
+                onClose={() => setShowDeleteModal(false)}
+                onDeleted={() => onBarDeleted(bar.id)} 
+            />
             )}
 
             {showAddBeerModal && (
