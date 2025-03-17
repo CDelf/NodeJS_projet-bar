@@ -6,6 +6,17 @@
     padding: 20px;
 }
 
+.bars-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 20px;
+}
+
+.filters {
+    flex: 0 0 250px; /* Largeur fixe pour le filtre */
+}
+
 .home-container {
     background-color: var(--cards-bckg-color);
     border-radius: 15px;
