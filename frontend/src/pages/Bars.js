@@ -4,25 +4,28 @@ import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import BarCard from '../components/BarCard';
 import FilterForm from '../components/FilterForm';
+import AddBarForm from '../components/AddBarForm';
 import '../styles/components/card.css';
 
 const Bars = () => {
-    const { bars, loading, error } = useFetchBars();
+    const { bars, loading, error, refetch } = useFetchBars();
     const [filters, setFilters] = useState({ name: '', city: '' });
+    const [showForm, setShowForm] = useState(false);
 
+    // Gestion de la recherche par nom/ville
     const handleFilter = (newFilters) => {
         setFilters(newFilters);
     };
 
     const getCityFromAddress = (address) => {
-        if (!address) return ''; // Gère le cas où l'adresse est undefined
+        if (!address) return ''; 
         const parts = address.split(' ');
-        return parts[parts.length - 1]; // Récupérer la ville depuis l'adresse
+        return parts[parts.length - 1]; 
     };
 
     const filteredBars = bars.filter(bar => {
-        const barName = bar?.name || ''; // Si le nom est undefined, retourne une string vide
-        const barCity = getCityFromAddress(bar?.address); // Si l'adresse est undefined, retourne ''
+        const barName = bar?.name || ''; 
+        const barCity = getCityFromAddress(bar?.address); 
 
         const nameMatch = filters.name 
             ? barName.toLowerCase().includes(filters.name.toLowerCase())
@@ -35,6 +38,17 @@ const Bars = () => {
         return nameMatch && cityMatch;
     });
 
+    // Gestion de l'ajout de bar
+    const handleBarAdded = async () => {
+        await refetch(); // Recharge les bars après ajout
+        setShowForm(false); // Ferme la modale après rechargement
+    };
+
+    // Fonction pour gérer la suppression d'un bar
+    const handleBarDeleted = (barId) => {
+        refetch(); // Recharge les bars après suppression
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Erreur: {error}</p>;
 
@@ -42,7 +56,7 @@ const Bars = () => {
         <div>
             <Header />
             <Navigation />
-            <div className="bars-container">
+            <div className="bars-page">
                 <div className="filters">
                     <FilterForm 
                         filters={[
@@ -52,10 +66,27 @@ const Bars = () => {
                         onFilter={handleFilter}
                     />
                 </div>
-                <div className="container">
-                    {filteredBars.map(bar => (
-                        <BarCard key={bar.id} bar={bar} />
-                    ))}
+                <div className="bars-content">
+                    <p className="add-bar-text" onClick={() => setShowForm(true)}>
+                        Propriétaire? Ajouter votre bar!
+                    </p>
+
+                    {showForm && (
+                        <AddBarForm 
+                            onClose={() => setShowForm(false)} 
+                            onBarAdded={handleBarAdded}
+                        />
+                    )}
+
+                    <div className="container">
+                        {filteredBars.map(bar => (
+                            <BarCard 
+                                key={bar.id} 
+                                bar={bar} 
+                                onBarDeleted={handleBarDeleted} 
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

@@ -14,7 +14,52 @@
 }
 
 .filters {
-    flex: 0 0 250px; /* Largeur fixe pour le filtre */
+    flex: 0 0 250px; 
+}
+
+/* Conteneur global */
+.bars-page {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    padding: 20px 50px;
+}
+
+/* Partie gauche avec le filtre */
+.filters {
+    max-width: 300px;
+}
+
+/* Partie droite avec le texte et les bars */
+.bars-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Texte pour ajouter un bar */
+.add-bar-text {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bolder;
+    color: var(--titles-color);
+    cursor: pointer;
+    background-color: rgba(20, 20, 20, 0.5);
+    padding: 10px;
+    text-decoration: underline;
+}
+
+.add-bar-text span {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Grid des bars */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }
 
 .home-container {
@@ -36,6 +81,7 @@
     box-shadow: 3px 3px 10px var(--shadow-color);
     padding: 20px;
     width: 300px;
+    position: relative; 
 }
 
 .card h2 {
@@ -114,3 +160,28 @@ button:active {
     width: 250px;
 }
 
+/* Formulaire de suppression */
+.delete-form {
+    margin-top: 20px;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.delete-form input {
+    margin-bottom: 10px;
+}
+
+/* icone de suppression */
+.delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #e74c3c;
+}
+
+.delete-icon:hover {
+    color: #c0392b;
+}

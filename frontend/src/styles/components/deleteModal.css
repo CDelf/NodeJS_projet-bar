@@ -1,0 +1,92 @@
+/* Styles pour la modale de suppression */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #1e1e1e;
+    padding: 20px 30px;
+    border-radius: 10px;
+    color: white;
+    width: 400px;
+    text-align: center;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: grey;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+.cancel-btn:hover {
+    background-color: #555;
+}
+
+
+.delete-modal {
+    position: fixed; /* Pour que la modale s'affiche au centre de l'écran */
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2a1e1e;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 999; /* Pour passer au-dessus des autres éléments */
+}
+
+.delete-modal p {
+    margin-bottom: 20px;
+}
+
+.btn-confirm {
+    background-color: #e74c3c;
+    color: white;
+    margin-right: 10px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: #7f8c8d;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-confirm:hover {
+    background-color: #c0392b;
+}
+
+.btn-cancel:hover {
+    background-color: #95a5a6;
+}

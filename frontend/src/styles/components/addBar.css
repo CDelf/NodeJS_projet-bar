@@ -1,0 +1,99 @@
+/* Styles pour le modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #1f1f1f;
+    padding: 20px 30px;
+    border-radius: 10px;
+    width: 400px;
+    color: white;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input,
+textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--subtitles-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: var(--subtitles-color);
+}
+
+.close-btn {
+    background-color: transparent;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-bar-modal {
+    background-color: #1e1e1e;
+    padding: 20px 30px;
+    border-radius: 10px;
+    width: 500px;
+    z-index: 1000;
+}
+
+input:focus {
+    color: white; 
+    outline: none; 
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border: 1px solid var(--subtitles-color); 
+    box-shadow: 0 0 5px var(--subtitles-color);
+}
+
